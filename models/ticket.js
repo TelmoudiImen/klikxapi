@@ -7,7 +7,7 @@ var TicketSchema = mongoose.Schema({
     numero_ticket: Number,
     date_ticket: {type: Date, default: Date.now},
     montant: Number,
-    tva: Number,
+    //tva: Number,
     flag: String,
     vendeur: {type: mongoose.Schema.Types.ObjectId, ref: 'Vendeur'},
     table: [mongoose.Schema.Types.Mixed],

@@ -26,7 +26,7 @@ router.post('/', function (req, res, next) {
     var ticket = new Ticket({
         date_ticket: req.body.date_ticket,
         montant: req.body.montant,
-        tva: req.body.tva,
+        //tva: req.body.tva,
         flag: req.body.flag,
         vendeur: req.body.vendeur,
         table: req.body.table,

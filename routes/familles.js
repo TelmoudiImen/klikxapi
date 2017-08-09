@@ -11,7 +11,6 @@ router.get('/', function (req, res, next) {
         }
     });
 });
-
 router.get('/:id', function (req, res, next) {
     Famille.findById(req.params.id, function (err, f) {
         if (err) {
@@ -26,14 +25,17 @@ router.post('/', function (req, res, next) {
     var famille = new Famille({
         designation: req.body.designation,
         ordre: (req.body.ordre !== "") ? parseInt(req.body.ordre) : 0,
-        color:req.body.color
+        color:req.body.color,
+        printers: req.body.printers
     });
 
     famille.save(function (err, f) {
         if (err) {
             return res.json(err);
         } else {
-            return res.json(f);
+          f.populate('printers', function(error, famille){
+              return res.json(famille);
+          });
         }
     });
 });
@@ -49,11 +51,14 @@ router.put('/:id', function (req, res, next) {
         if (err) {
             return res.json(err);
         } else {
-            return res.json(f);
+          f.populate('printers', function(error, famille){
+            return res.json(famille);
+          });
         }
     });
 });
-srouter.delete('/:id', function (req, res, next) {
+
+router.delete('/:id', function (req, res, next) {
     Famille.findByIdAndRemove(req.params.id, function (err, f) {
         if (err) {
             return res.json(err);
@@ -65,24 +70,24 @@ srouter.delete('/:id', function (req, res, next) {
 //update many records//
 router.put('/',function (req, res, next) {
   var data=req.body;
-          data.forEach(function(obj, index) {
-               Famille.update({_id:obj._id}, {"$set":
-                           {
-                               designation: obj.designation,
-                               ordre: obj.ordre,
-                               color:  obj.color
-                           }
-                   },
-                   function (err, f) {
-                       if (err) {
-                           if(index == (data.length - 1))
-                            return res.json(err);
-                       } else {
-                           if(index == (data.length - 1))
-                           return res.json(f);
-                       }
-                   }
-               )
-       });
+  data.forEach(function(obj, index) {
+    Famille.update({_id:obj._id}, {"$set":
+         {
+           designation: obj.designation,
+           ordre: obj.ordre,
+           color:  obj.color
+         }
+       },
+       function (err, f) {
+           if (err) {
+               if(index == (data.length - 1))
+                return res.json(err);
+           } else {
+               if(index == (data.length - 1))
+               return res.json(f);
+           }
+       }
+    )
+  });
 });
 module.exports = router;
