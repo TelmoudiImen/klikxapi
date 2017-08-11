@@ -3,7 +3,9 @@ var router = express.Router();
 var Article = require('../models/article');
 
 router.get('/', function (req, res, next) {
-    Article.find().exec(function (err, articles) {
+    Article.find()
+    .populate('famille printers articlesItems Messagekp')
+    .exec(function (err, articles) {
         if (err) {
             return res.json(err);
         } else {
@@ -43,7 +45,9 @@ router.post('/', function (req, res, next) {
         if (err) {
             return res.json(err);
         } else {
-            return res.json(a);
+            a.populate('famille printers articlesItems Messagekp', function(error, produit){
+                return res.json(produit);
+            });
         }
     });
 });
@@ -70,7 +74,9 @@ router.put('/:id', function (req, res, next) {
         if (err) {
             return res.json(err);
         } else {
-            return res.json(a);
+            a.populate('famille printers articlesItems Messagekp', function(error, article){
+                return res.json(article);
+            });
         }
     });
 });
