@@ -74,8 +74,8 @@ router.put('/:id', function (req, res, next) {
         if (err) {
             return res.json(err);
         } else {
-            a.populate('Famille Messagekp Imprimante', function(error, famille){
-              return res.json(famille);
+            a.populate('famille printers articlesItems Messagekp', function(error, article){
+                return res.json(article);
             });
         }
     });
