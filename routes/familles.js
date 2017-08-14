@@ -3,7 +3,7 @@ var router = express.Router();
 var Famille = require('../models/famille');
 
 router.get('/', function (req, res, next) {
-    Famille.find().exec(function (err, familles) {
+    Famille.find().populate('printers').exec(function (err, familles) {
         if (err) {
             return res.json(err);
         } else {
@@ -44,7 +44,8 @@ router.put('/:id', function (req, res, next) {
     Famille.findByIdAndUpdate(req.params.id, {
         designation: req.body.designation,
         ordre: (req.body.ordre !== "") ? parseInt(req.body.ordre) : 0,
-        color:req.body.color
+        color:req.body.color,
+        printers: req.body.printers
     }, {
         new: true
     }, function (err, f) {
