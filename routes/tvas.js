@@ -25,8 +25,6 @@ router.get('/:id', function (req, res, next) {
 router.post('/', function (req, res, next) {
     var tva = new Tva({
         valeur: req.body.valeur,
-        libelle:req.body.libelle
-
     });
     tva.save(function (err, t) {
         if (err) {
@@ -39,9 +37,7 @@ router.post('/', function (req, res, next) {
 
 router.put('/:id', function (req, res, next) {
     Tva.findByIdAndUpdate(req.params.id, {
-        valeur: req.body.valeur,
-        libelle:req.body.libelle
-
+        valeur: req.body.valeur
     }, {
         new: true
     }, function (err, t) {

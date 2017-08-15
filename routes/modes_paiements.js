@@ -28,7 +28,9 @@ router.post('/', function (req, res, next) {
         etat: req.body.etat,
         ecran: req.body.ecran,
         rendu: req.body.rendu,
-        editable: req.body.editable
+        tiroir: req.body.tiroir,
+        editable: req.body.editable,
+        monnai: req.body.monnai,
     });
     mode_maiement.save(function (err, f) {
         if (err) {
@@ -45,7 +47,9 @@ router.put('/:id', function (req, res, next) {
         etat: req.body.etat,
         ecran: req.body.ecran,
         rendu: req.body.rendu,
-        editable: req.body.editable
+        tiroir: req.body.tiroir,
+        editable: req.body.editable,
+        monnai: req.body.monnai,
     }, {
         new: true
     }, function (err, m) {
