@@ -28,7 +28,9 @@ router.post('/', function (req, res, next) {
         etat: req.body.etat,
         ecran: req.body.ecran,
         rendu: req.body.rendu,
-        editable: req.body.editable
+        tiroir: req.body.tiroir,
+        editable: req.body.editable,
+        monnai: req.body.monnai,
     });
     mode_maiement.save(function (err, f) {
         if (err) {
@@ -45,7 +47,9 @@ router.put('/:id', function (req, res, next) {
         etat: req.body.etat,
         ecran: req.body.ecran,
         rendu: req.body.rendu,
-        editable: req.body.editable
+        tiroir: req.body.tiroir,
+        editable: req.body.editable,
+        monnai: req.body.monnai,
     }, {
         new: true
     }, function (err, m) {
@@ -58,7 +62,11 @@ router.put('/:id', function (req, res, next) {
 });
 
 router.delete('/:id', function (req, res, next) {
-    ModePaiement.findByIdAndRemove(req.params.id, function (err, m) {
+    ModePaiement.findByIdAndUpdate(req.params.id, {
+        deleted : true
+    }, {
+        new: true
+    }, function (err,m) {
         if (err) {
             return res.json(err);
         } else {

@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var MessageKpSchema = mongoose.Schema({
     designation: String,
-    message: [String]
+    messages: [String]
 
 });
 

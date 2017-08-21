@@ -3,7 +3,7 @@ var router = express.Router();
 var Vendeur = require('../models/vendeur');
 
 router.get('/', function (req, res, next) {
-    Vendeur.find().exec(function (err, vendeurs) {
+    Vendeur.find({deleted : false}).exec(function (err, vendeurs) {
         if (err) {
             return res.json(err);
         } else {
@@ -64,9 +64,12 @@ router.put('/:id', function (req, res, next) {
         }
     });
 });
-
 router.delete('/:id', function (req, res, next) {
-    Vendeur.findByIdAndRemove(req.params.id, function (err, v) {
+    Vendeur.findByIdAndUpdate(req.params.id, {
+        deleted : true
+    }, {
+        new: true
+    }, function (err, v) {
         if (err) {
             return res.json(err);
         } else {

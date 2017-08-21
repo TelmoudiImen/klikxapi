@@ -25,7 +25,7 @@ router.get('/:id', function (req, res, next) {
 router.post('/', function (req, res, next) {
     var message = new MessageKp({
         designation: req.body.designation,
-        message:req.body.message
+        messages:req.body.messages
     });
     message.save(function (err, f) {
         if (err) {
@@ -39,7 +39,7 @@ router.post('/', function (req, res, next) {
 router.put('/:id', function (req, res, next) {
     MessageKp.findByIdAndUpdate(req.params.id, {
         designation: req.body.designation,
-        message:req.body.message
+        messages:req.body.messages
     }, {
         new: true
     }, function (err, m) {
