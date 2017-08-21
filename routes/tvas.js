@@ -24,8 +24,7 @@ router.get('/:id', function (req, res, next) {
 
 router.post('/', function (req, res, next) {
     var tva = new Tva({
-        valeur: req.body.valeur,
-        libelle:req.body.libelle
+        valeur: req.body.valeur
 
     });
     tva.save(function (err, t) {
