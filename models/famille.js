@@ -16,7 +16,6 @@ var FamilleSchema = mongoose.Schema({
         virtuals: true
     }
 });
-
 FamilleSchema
     .virtual('printersNames')
     .get(function () {

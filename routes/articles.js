@@ -82,7 +82,7 @@ router.put('/:id', function (req, res, next) {
 });
 
 router.delete('/:id', function (req, res, next) {
-    Article.findByIdAndRemove(req.params.id, function (err, a) {
+    Article.findByIdAndRemove(req.params.id, function (err,a) {
         if (err) {
             return res.json(err);
         } else {

@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var ModePaiement = require('../models/mode_paiement');
+var Ticket=require('../models/ticket');
 
 router.get('/', function (req, res, next) {
     ModePaiement.find().exec(function (err, modes_paiements) {
@@ -62,17 +63,33 @@ router.put('/:id', function (req, res, next) {
 });
 
 router.delete('/:id', function (req, res, next) {
-    ModePaiement.findByIdAndUpdate(req.params.id, {
-        deleted : true
-    }, {
-        new: true
-    }, function (err,m) {
-        if (err) {
-            return res.json(err);
-        } else {
-            return res.json(m);
+    Ticket.find({
+        paiement: req.params.id
+    }).exec(function (err, paiements) {
+        if(!err){
+            if(paiements.length > 0 ){
+                return res.json({
+                    exist : true
+                })
+            }
+            else{
+                ModePaiement.findByIdAndUpdate(req.params.id, {
+                    deleted : true
+                }, {
+                    new: true
+                }, function (err,m) {
+                    if (err) {
+                        return res.json(err);
+                    } else {
+                        return res.json(m);
+                    }
+                });
+            }
         }
-    });
+        else{
+            return res.json(err)
+        }
+    })
 });
 
 module.exports = router;
