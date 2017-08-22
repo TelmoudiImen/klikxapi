@@ -12,7 +12,7 @@ var VendeurSchema = mongoose.Schema({
     permissions: mongoose.Schema.Types.Mixed,
     params: mongoose.Schema.Types.Mixed,
     photo: {type: String, default: null},
-    deleted : {type: Boolean, default: false},
+    deleted : {type: Boolean, default: false}
 });
 
 VendeurSchema.plugin(autoIncrement.plugin, {model: 'Vendeur', field: 'code_vendeur', startAt: 1});

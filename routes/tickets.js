@@ -52,7 +52,6 @@ router.post('/', function (req, res, next) {
         }
     });
 });
-
 router.delete('/:id', function (req, res, next) {
     Ticket.findByIdAndRemove(req.params.id, function (err, t) {
         if (err) {

@@ -3,7 +3,7 @@ var router = express.Router();
 var Famille = require('../models/famille');
 
 router.get('/', function (req, res, next) {
-    Famille.find().populate('printers').exec(function (err, familles) {
+    Famille.find({deleted : false}).populate('printers').exec(function (err, familles) {
         if (err) {
             return res.json(err);
         } else {
@@ -58,9 +58,12 @@ router.put('/:id', function (req, res, next) {
         }
     });
 });
-
 router.delete('/:id', function (req, res, next) {
-    Famille.findByIdAndRemove(req.params.id, function (err, f) {
+    Famille.findByIdAndUpdate(req.params.id, {
+        deleted : true
+    }, {
+        new: true
+    }, function (err,f) {
         if (err) {
             return res.json(err);
         } else {
@@ -68,6 +71,8 @@ router.delete('/:id', function (req, res, next) {
         }
     });
 });
+
+
 //update many records//
 router.put('/',function (req, res, next) {
   var data=req.body;

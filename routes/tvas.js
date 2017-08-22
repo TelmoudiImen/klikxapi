@@ -24,7 +24,9 @@ router.get('/:id', function (req, res, next) {
 
 router.post('/', function (req, res, next) {
     var tva = new Tva({
+
         valeur: req.body.valeur,
+
     });
     tva.save(function (err, t) {
         if (err) {
@@ -48,9 +50,12 @@ router.put('/:id', function (req, res, next) {
         }
     });
 });
-
 router.delete('/:id', function (req, res, next) {
-    Tva.findByIdAndRemove(req.params.id, function (err, t) {
+    Tva.findByIdAndUpdate(req.params.id, {
+        deleted : true
+    }, {
+        new: true
+    }, function (err, t) {
         if (err) {
             return res.json(err);
         } else {

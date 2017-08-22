@@ -62,7 +62,11 @@ router.put('/:id', function (req, res, next) {
 });
 
 router.delete('/:id', function (req, res, next) {
-    ModePaiement.findByIdAndRemove(req.params.id, function (err, m) {
+    ModePaiement.findByIdAndUpdate(req.params.id, {
+        deleted : true
+    }, {
+        new: true
+    }, function (err,m) {
         if (err) {
             return res.json(err);
         } else {

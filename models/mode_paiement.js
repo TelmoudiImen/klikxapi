@@ -8,6 +8,7 @@ var ModePaimentSchema = mongoose.Schema({
     tiroir: {type: Boolean, default: true},
     editable : {type: Boolean, default: true},
     monnai : {type: Boolean, default: false},
+    deleted : {type: Boolean, default: false}
 });
 
 module.exports = mongoose.model('ModePaiement', ModePaimentSchema);

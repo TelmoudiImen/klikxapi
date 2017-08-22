@@ -64,7 +64,6 @@ router.put('/:id', function (req, res, next) {
         }
     });
 });
-
 router.delete('/:id', function (req, res, next) {
     Vendeur.findByIdAndUpdate(req.params.id, {
         deleted : true
