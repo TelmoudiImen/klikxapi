@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var _ = require('lodash');
 
 var FamilleSchema = mongoose.Schema({
     designation: String,
@@ -15,5 +16,16 @@ var FamilleSchema = mongoose.Schema({
         virtuals: true
     }
 });
+FamilleSchema
+    .virtual('printersNames')
+    .get(function () {
+        var temp = [];
+	    _.forEach(this.printers, function(value) {
+	        if(value.designation != undefined){
+	            temp.push(value.designation);
+	        }
+	    });
+	    return temp.join(', ');
+    });
 
 module.exports = mongoose.model('Famille', FamilleSchema);

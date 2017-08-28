@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Imprimante= require('../models/imprimante');
+var Article=require('../models/article');
 
 router.get('/', function (req, res, next) {
     Imprimante.find().exec(function (err, imprimantes) {
@@ -53,14 +54,30 @@ router.put('/:id', function (req, res, next) {
         }
     });
 });
-
 router.delete('/:id', function (req, res, next) {
-    Imprimante.findByIdAndRemove(req.params.id, function (err, i) {
-        if (err) {
-            return res.json(err);
-        } else {
-            return res.json(i);
+    Article.find({
+        printers: req.params.id
+    }).exec(function (err, imprimantes) {
+        if(!err){
+            if(imprimantes.length > 0 ){
+                return res.json({
+                    exist : true
+                })
+            }
+            else{
+                Imprimante.findByIdAndRemove(req.params.id, function (err,i) {
+                    if (err) {
+                        return res.json(err);
+                    } else {
+                        return res.json(i);
+                    }
+                });
+            }
         }
-    });
+        else{
+            return res.json(err)
+        }
+    })
 });
+
 module.exports = router;

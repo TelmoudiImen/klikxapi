@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Famille = require('../models/famille');
+var Article = require('../models/article');
 
 router.get('/', function (req, res, next) {
     Famille.find({deleted : false}).populate('printers').exec(function (err, familles) {
@@ -59,19 +60,34 @@ router.put('/:id', function (req, res, next) {
     });
 });
 router.delete('/:id', function (req, res, next) {
-    Famille.findByIdAndUpdate(req.params.id, {
-        deleted : true
-    }, {
-        new: true
-    }, function (err,f) {
-        if (err) {
-            return res.json(err);
-        } else {
-            return res.json(f);
+    Article.find({
+        famille: req.params.id
+    }).exec(function (err, articles) {
+        if(!err){
+            if(articles.length > 0 ){
+                return res.json({
+                    exist : true
+                })
+            }
+            else{
+                Famille.findByIdAndUpdate(req.params.id,{
+                    deleted : true
+                }, {
+                    new: true
+                }, function (err,f) {
+                    if (err) {
+                        return res.json(err);
+                    } else {
+                        return res.json(f);
+                    }
+                });
+            }
         }
-    });
+        else{
+            return res.json(err)
+        }
+    })
 });
-
 
 //update many records//
 router.put('/',function (req, res, next) {

@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var MessageKp= require('../models/message');
+var Article = require('../models/article');
 
 router.get('/', function (req, res, next) {
     MessageKp.find().exec(function (err, messages) {
@@ -52,12 +53,29 @@ router.put('/:id', function (req, res, next) {
 });
 
 router.delete('/:id', function (req, res, next) {
-    MessageKp.findByIdAndRemove(req.params.id, function (err, m) {
-        if (err) {
-            return res.json(err);
-        } else {
-            return res.json(m);
+    Article.find({
+        message_kp: req.params.id
+    }).exec(function (err, messages) {
+        if(!err){
+            if(messages.length > 0 ){
+                return res.json({
+                    exist : true
+                })
+            }
+            else{
+                MessageKp.findByIdAndRemove(req.params.id, function (err,m) {
+                    if (err) {
+                        return res.json(err);
+                    } else {
+                        return res.json(m);
+                    }
+                });
+            }
         }
-    });
+        else{
+            return res.json(err)
+        }
+    })
 });
+
 module.exports = router;

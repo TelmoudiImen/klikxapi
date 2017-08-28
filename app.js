@@ -23,6 +23,7 @@ app.use(function (req, res, next) {
 
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/klikx');
+app.use('/', require('./routes/index'));
 app.use('/parametres', require('./routes/parametres'));
 app.use('/duplicatas', require('./routes/duplicatas'));
 app.use('/fiches', require('./routes/fiches'));
@@ -37,7 +38,7 @@ app.use('/messages', require('./routes/messages'));
 app.use('/articles', require('./routes/articles'));
 app.use('/modes_paiements', require('./routes/modes_paiements'));
 app.use('/vendeurs', require('./routes/vendeurs'));
-app.use('/', require('./routes/index'));
+app.use('/caisses', require('./routes/caisses'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
